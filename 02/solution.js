@@ -23,3 +23,20 @@ console.log(counts.twos * counts.threes);
 
 // Part 2
 
+let commonLetters = null;
+
+for (let code1 of inputArray) {
+  for (let code2 of inputArray.slice(inputArray.indexOf(code1))) {
+    const chars1 = [...code1];
+    const chars2 = [...code2];
+
+    const matches = chars1.filter((c, i) => c === chars2[i]);
+    if (matches.length === code1.length - 1) {
+      commonLetters = matches.join('');
+    }
+  }
+
+  if (commonLetters !== null) break;
+}
+
+console.log(commonLetters);
