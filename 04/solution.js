@@ -49,3 +49,28 @@ const findPartOne = () => {
 }
 
 console.log(findPartOne());
+
+// Part 2
+
+const findPartTwo = () => {
+  const sleepiestGuard = Object.keys(guardSleepTimes).reduce((guardToReturn, number) => {
+    const recordForGuard = guardSleepTimes[number];
+    currentGuard = Object.keys(recordForGuard).reduce((max, minute) => {
+      if (recordForGuard[minute] > max.totalSlept) {
+        max = { guard: number, minute: minute, totalSlept: recordForGuard[minute] };
+      }
+
+      return max;
+    }, { guard: number, minute: null, totalSlept: 0 });
+    
+    if (currentGuard.totalSlept > guardToReturn.totalSlept) {
+      guardToReturn = currentGuard;
+    }
+
+    return guardToReturn;
+  }, { guard: null, minute: null, totalSlept: 0 });
+  
+  return sleepiestGuard.guard * sleepiestGuard.minute;
+}
+
+console.log(findPartTwo());
