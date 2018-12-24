@@ -27,21 +27,25 @@ for (let input of inputArray) {
 
 // Part 1
 
-const minutesSleptByGuard = Object.keys(guardSleepTimes).reduce((totalByGuard, number) => {
-  totalByGuard[number] = Object.values(guardSleepTimes[number]).reduce((total, value) => total + value, 0);
-  return totalByGuard;
-}, {});
+const findPartOne = () => {
+  const minutesSleptByGuard = Object.keys(guardSleepTimes).reduce((totalByGuard, number) => {
+    totalByGuard[number] = Object.values(guardSleepTimes[number]).reduce((total, value) => total + value, 0);
+    return totalByGuard;
+  }, {});
+  
+  const maxSlept = Math.max(...Object.values(minutesSleptByGuard));
+  
+  const sleepiestGuard = Object.keys(minutesSleptByGuard).find(number => {
+    return minutesSleptByGuard[number] === maxSlept
+  });
+  
+  const recordForGuard = guardSleepTimes[sleepiestGuard];
+  
+  const sleepiestMinute = Object.keys(recordForGuard).reduce((max, minute) => {
+    return recordForGuard[minute] > recordForGuard[max] ? minute : max;
+  })
+  
+  return sleepiestGuard * sleepiestMinute;
+}
 
-const maxSlept = Math.max(...Object.values(minutesSleptByGuard));
-
-const sleepiestGuard = Object.keys(minutesSleptByGuard).find(number => {
-  return minutesSleptByGuard[number] === maxSlept
-});
-
-const recordForGuard = guardSleepTimes[sleepiestGuard];
-
-const sleepiestMinute = Object.keys(recordForGuard).reduce((max, minute) => {
-  return recordForGuard[minute] > recordForGuard[max] ? minute : max;
-})
-
-console.log(sleepiestGuard * sleepiestMinute);
+console.log(findPartOne());
