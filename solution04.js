@@ -1,4 +1,4 @@
-const input = require('fs').readFileSync('04/input.txt').toString().split('\n');
+const input = require('fs').readFileSync('input04.txt').toString().split('\n');
 
 const inputArray = [...input.sort()];
 
