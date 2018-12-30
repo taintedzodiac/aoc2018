@@ -27,8 +27,6 @@ const calculateDistance = (coords1, coords2) => {
     return Math.abs(coords1[0] - coords2[0]) + Math.abs(coords1[1] - coords2[1]);
 };
 
-// Part 1
-
 let assignClosest = (x, y) => {
     const closestPoint = points.reduce((closest, point) => {
         const distance = calculateDistance([point.x, point.y], [x,y]);
@@ -44,15 +42,26 @@ let assignClosest = (x, y) => {
     if (closestPoint.pointIndex !== null) points[closestPoint.pointIndex].closest++;
 };
 
+const calculateRegion = (x, y) => {
+    return points.reduce((size, point) => {
+        return size + calculateDistance([point.x, point.y], [x, y]);
+    }, 0);
+};
+
+let totalRegionSize = 0;
+
 for (const x of _.range(minX,maxX)) {
     for (const y of _.range(minY,maxY)) {
         assignClosest(x, y);
+        if (calculateRegion(x,y) < 10000) totalRegionSize++;
     }
 }
 
-console.log(points.reduce((size, point) => {
+const mostCentralTotal = points.reduce((size, point) => {
     if (!point.inner) return size;
     return Math.max(size, point.closest);
-}, 0));
+}, 0)
 
-// Part 2
+console.log(mostCentralTotal); // Part 1
+
+console.log(totalRegionSize); // Part 2
